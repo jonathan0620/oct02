@@ -1,0 +1,65 @@
+package 배열스윙;
+
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+public class 영화좌석예매 {
+	// 전역 변수 선언하자
+	static int count = 0; // 전역변수는 자동 초기화 = 0 안 해줘도 됨.
+	static String no = "";
+	public static void main(String[] args) {
+		JFrame f = new JFrame(); // 프레임 만들기
+		f.setSize(1500, 1000); // 프레임 크기 설정하기
+		f.setTitle("영화 좌석 예매"); // 타이틀 제목
+
+		FlowLayout flow = new FlowLayout();
+		f.setLayout(flow); // flow 레이아웃 설정, 이렇게 하면 순서대로 버튼이 생기게 됨.
+
+		f.getContentPane().setBackground(Color.green);
+
+		JButton[] buttons = new JButton[500]; // 버튼 500개 만듦, null로 초기화 되어있는 상태
+
+		for (int i = 0; i < buttons.length; i++) {
+			buttons[i] = new JButton();
+//			buttons[i].setText(i + "");
+			buttons[i].setText(String.valueOf(i)); // 31열과 같이 i를 스트링으로 바꿔주는 것
+		}
+
+		Random r = new Random();
+		Color[] colors = { Color.red, Color.yellow, Color.pink };
+		// colors[0], colors[1], colors[2]
+		for (int i = 0; i < buttons.length; i++) {
+
+			int index = r.nextInt(3); // 0,1,2
+			buttons[i].setBackground(colors[index]);
+			f.add(buttons[i]); // 버튼 올림
+			buttons[i].addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// 버튼 클릭 했을 때 처리하고 싶은 내용!
+					count++;
+					String s = e.getActionCommand();// 버튼 위에 올라가는 글자를 가지고 와줘요
+					no = no + s + " "; //sum = sum + y;
+					int pay = count * 10000;
+					JOptionPane.showMessageDialog(f, 
+							s + "을(를) 클릭 하셨군요. \n현재까지 결제 금액은 " + 
+							pay + "원 입니다. \n좌석 번호는 " + 
+							no);
+				}
+			});
+		}
+
+		// 맨 마지막으로!
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // x 누르면 프로그램 종료
+		f.setVisible(true); // 맨 끝으로 보내자
+	}
+
+}
